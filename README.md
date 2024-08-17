@@ -63,13 +63,19 @@ client_socket.close()
 ```
 ![r3](https://github.com/user-attachments/assets/3d1731d1-01a9-4eef-8cf5-aeb7a1cfb73b)
 
+Connection established:
+
 ![r4](https://github.com/user-attachments/assets/532019c6-8039-4bf7-aed0-3e33d07607db)
 
 **3.Capture Sequence and Acknowledgment Numbers:**
 
 Use the Wireshark capture to determine the sequence and acknowledgment numbers from the established connection. These numbers will be used in the attack scripts to craft valid RST packets.
 
+Trace TCP handshake:
+
 ![r5](https://github.com/user-attachments/assets/2583e578-bcaf-483a-adf2-53a50fcd61ed)
+
+Following ack and seq no. found for this session:
 
 ![r6](https://github.com/user-attachments/assets/301df6df-c08e-4492-a21a-788f222466a0)
 
@@ -102,10 +108,15 @@ rst_packet = ip/tcp
 # Send the RST packet
 send(rst_packet)
 ```
+Running the script after connection and placement of ack & seq no. :
 
 ![r7](https://github.com/user-attachments/assets/ba1b5969-3f6a-45bd-845e-4ed5a052d408)
 
+The resest packet sent can also be traced by wireshark , as shown below:
+
 ![r8](https://github.com/user-attachments/assets/f84cba4a-e555-4940-b2bc-c61669e0b0ac)
+
+Suricata shows the alerts:
 
 ![r9](https://github.com/user-attachments/assets/17353f47-732c-4284-ae0f-30d261acc02a)
 
@@ -132,8 +143,11 @@ for i in range(packet_count):
 
 print("Attack completed.")
 ```
+Running the Script:
 
 ![r10](https://github.com/user-attachments/assets/9b9c3048-0d40-4364-8c77-ecdb49f180d5)
+
+Alert Shown by Suriacta:
 
 ![r11](https://github.com/user-attachments/assets/da591d17-ab66-4257-a48f-a104b2fbd0e0)
 
@@ -169,7 +183,11 @@ for i in range(packet_count):
 
 print("Attack completed.")
 ```
+Running the script after connection and placement of ack & seq no. :
+
 ![r12](https://github.com/user-attachments/assets/87207c1f-9fb7-4710-84ac-f4fb4da13a49)
+
+Alerts shown by suricata:
 
 ![r13](https://github.com/user-attachments/assets/67d87041-b5e8-45dc-a483-8a49b7d0f7f9)
 
@@ -202,7 +220,11 @@ print(f"TCP Layer: {tcp.summary()}")
 pkt = ip/tcp
 print(f"Packet: {pkt.summary()}")
 ```
+Running the script after connection and placement of ack & seq no. :
+
 ![r14](https://github.com/user-attachments/assets/5765319d-336e-4ffe-a856-6cc31fa325a5)
+
+Suricata shows following alerts:
 
 ![r15](https://github.com/user-attachments/assets/0e407783-7cc5-45be-b759-4b0d331de40e)
 
@@ -232,8 +254,9 @@ target_port = 80
 
 send_rst_with_large_payload(target_ip, target_port)
 ```
-![r16](https://github.com/user-attachments/assets/2c920390-4bc2-4d47-ac71-9cab2f05e32d)
+Running the script after connection and placement of ack & seq no. :
 
+![r16](https://github.com/user-attachments/assets/2c920390-4bc2-4d47-ac71-9cab2f05e32d)
 ![r17](https://github.com/user-attachments/assets/054812ea-0018-465e-812d-04b65038ce6a)
 
 ## Suricata Rules
