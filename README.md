@@ -275,7 +275,7 @@ drop tcp $HOME_NET any -> $HOME_NET any (msg:"RST Packet with Payload"; flags:R;
 Contributions to this project are not welcome. Please follow the guidelines below for contributions:
 
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the Proprietary License. See the [LICENSE](LICENSE) file for details.
 
 
 This documentation outlines the steps and code necessary to simulate TCP RST attacks and use Suricata to detect and respond to these threats, making it an educational resource for network security enthusiasts.
