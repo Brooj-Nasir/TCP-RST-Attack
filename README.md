@@ -268,6 +268,7 @@ drop tcp $HOME_NET any -> $HOME_NET any (msg:"RST Packet with Payload"; flags:R;
 -[RSTInjectionScript.py](RSTInjectionScript.py)
 -[RSTFloodScript.py](RSTFloodScript.py)
 -[RSTFloodwithActiveConnectionScript.py](RSTFloodwithActiveConnectionScript.py)
+-[RSTPayloadScript.py](RSTPayloadScript.py)
 
 ## Contributions
 Contributions to this project are not welcome. Please follow the guidelines below for contributions:
